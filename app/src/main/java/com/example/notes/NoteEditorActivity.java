@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,12 +22,10 @@ public class NoteEditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_editor);
-
         EditText edit = findViewById(R.id.editText);
-
         Intent intent = getIntent();
-
         noteId = intent.getIntExtra("noteId", -1);
+
         if (noteId != -1) {
             edit.setText(notes.get(noteId));
         } else {
@@ -59,14 +58,15 @@ public class NoteEditorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        for (String note : notes) {
-            if(note.length() == 0){
+        String last = notes.get(notes.size() - 1);
+            if (last.length() == 0) {
                 Toast.makeText(NoteEditorActivity.this,
-                        "You have created empty note!",
+                        "You have created an empty note!",
                         Toast.LENGTH_SHORT).show();
             }
+            super.onBackPressed();
         }
-        super.onBackPressed();
     }
-}
+
+
 
